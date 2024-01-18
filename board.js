@@ -35,7 +35,6 @@ export class Board {
     };
 
     this.reset = function () {
-      this.isLose = true;
       this.snake.reset();
       this.countFood = 0;
       this.speed = 400;
