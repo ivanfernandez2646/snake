@@ -1,0 +1,27 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "node --watch index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanfernandez2646/snake.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivanfernandez2646/snake/issues"
+  },
+  "homepage": "https://github.com/ivanfernandez2646/snake#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "howler": "^2.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

@@ -65,16 +65,25 @@ class Board {
   }
 
   reset() {
+    new Howl({
+      preload: true,
+      src: [`./assets/crash${Math.floor(Math.random() * (2 - 1 + 1) + 1)}.m4a`],
+    }).play();
     this.#snake.reset();
     this.#countApples = 0;
     this.#speed = SPEED_INTERVAL;
     clearInterval(this.#clockInterval);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    alert("END GAME");
+    setTimeout(() => {
+      alert("END GAME");
+    }, 50);
     this.start();
   }
 
   generateNewApple() {
+    new Howl({
+      src: [`./assets/eat.m4a`],
+    }).play();
     this.#increaseSpeed();
 
     const frozenPieces = this.#snake.getPieces();
