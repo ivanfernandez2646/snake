@@ -1,6 +1,4 @@
-import { Board } from "./board.js";
-
-const board = new Board();
+import { board } from "./board.js";
 
 document.addEventListener("keydown", function (event) {
   if (event.defaultPrevented) {
@@ -8,13 +6,13 @@ document.addEventListener("keydown", function (event) {
   }
 
   if (event.key === "ArrowRight") {
-    board.snake.setDirection("right");
+    board.setSnakeDirection("right");
   } else if (event.key === "ArrowLeft") {
-    board.snake.setDirection("left");
+    board.setSnakeDirection("left");
   } else if (event.key === "ArrowUp") {
-    board.snake.setDirection("up");
+    board.setSnakeDirection("up");
   } else if (event.key === "ArrowDown") {
-    board.snake.setDirection("down");
+    board.setSnakeDirection("down");
   }
 });
 

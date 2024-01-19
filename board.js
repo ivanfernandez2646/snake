@@ -1,19 +1,30 @@
-import { BOARD_SIZE, PIECE_SIZE, SPEED_INCREMENTATOR } from "./constants.js";
+import {
+  BOARD_SIZE,
+  PIECE_SIZE,
+  SPEED_INTERVAL,
+  SPEED_INCREMENTATOR,
+} from "./constants.js";
 import { Apple } from "./apple.js";
-import { Snake } from "./snake.js";
-import { deepClone } from "./deepClone.js";
+import { Snake, SnakePiece } from "./snake.js";
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-export class Board {
+class Board {
+  #snake;
+  #clockInterval;
+  #speed;
+  #apple;
+  #countApples;
+  #availablePositionsForNewApple;
+
   constructor() {
-    this.snake = undefined;
-    this.apple = undefined;
-    this.clockInterval = undefined;
-    this.countFood = 0;
-    this.speed = 400; // milliseconds
-    this.availableCoordsForApple = (() => {
+    this.#snake = undefined;
+    this.#clockInterval = undefined;
+    this.#speed = SPEED_INTERVAL;
+    this.#apple = undefined;
+    this.#countApples = 0;
+    this.#availablePositionsForNewApple = (() => {
       const res = [];
       let i = 0;
       do {
@@ -23,64 +34,85 @@ export class Board {
       return res;
     })();
 
-    this.start = function () {
-      this.snake = new Snake({ x: 0, y: 0, board: this });
-      this.apple = new Apple({ x: 20, y: 20 });
-      this.snake.draw();
-      this.apple.draw();
+    if (typeof Board.instance === "object") {
+      return Board.instance;
+    }
 
-      this.clockInterval = setInterval(() => {
-        this.tick();
-      }, this.speed);
-    };
+    Board.instance = this;
+    return this;
+  }
 
-    this.reset = function () {
-      this.snake.reset();
-      this.countFood = 0;
-      this.speed = 400;
-      clearInterval(this.clockInterval);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      alert("END GAME");
-      this.start();
-    };
+  // Getters
+  getApple() {
+    return this.#apple;
+  }
 
-    this.tick = function () {
-      this.snake.move();
-    };
+  // Setters
+  setSnakeDirection(direction) {
+    this.#snake.setDirection(direction);
+  }
 
-    this.generateNewApple = function () {
-      let x;
-      let y;
+  // Public methods
+  start() {
+    this.#snake = new Snake({ x: 0, y: 0, board: this });
+    this.#apple = new Apple({ x: 20, y: 20 });
+    this.#snake.draw();
+    this.#apple.draw();
 
-      this.countFood += 1;
-      this.increaseSpeed();
+    this.#clockInterval = setInterval(() => {
+      this.#tick();
+    }, this.#speed);
+  }
 
-      const frozenPieces = deepClone(this.snake.body);
-      do {
-        x =
-          this.availableCoordsForApple[
-            Math.floor(Math.random() * this.availableCoordsForApple.length)
-          ];
-        y =
-          this.availableCoordsForApple[
-            Math.floor(Math.random() * this.availableCoordsForApple.length)
-          ];
-      } while (
-        x % PIECE_SIZE !== 0 ||
-        y % PIECE_SIZE !== 0 ||
-        frozenPieces.some((piece) => piece.isCollision({ x, y }))
-      );
+  reset() {
+    this.#snake.reset();
+    this.#countApples = 0;
+    this.#speed = SPEED_INTERVAL;
+    clearInterval(this.#clockInterval);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    alert("END GAME");
+    this.start();
+  }
 
-      this.apple = new Apple({ x, y });
-      this.apple.draw();
-    };
+  generateNewApple() {
+    this.#increaseSpeed();
 
-    this.increaseSpeed = function () {
-      clearInterval(this.clockInterval);
-      this.clockInterval = setInterval(
-        () => this.tick(),
-        this.speed - (this.countFood * 5 + SPEED_INCREMENTATOR)
-      );
-    };
+    const frozenPieces = this.#snake.getPieces();
+    let tmpXNewApple, tmpYNewApple;
+
+    do {
+      tmpXNewApple =
+        this.#availablePositionsForNewApple[
+          Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
+        ];
+      tmpYNewApple =
+        this.#availablePositionsForNewApple[
+          Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
+        ];
+    } while (
+      tmpXNewApple % PIECE_SIZE !== 0 ||
+      tmpYNewApple % PIECE_SIZE !== 0 ||
+      frozenPieces.some((piece) =>
+        piece.isCollision(new SnakePiece({ x: tmpXNewApple, y: tmpYNewApple }))
+      )
+    );
+
+    this.#apple = new Apple({ x: tmpXNewApple, y: tmpYNewApple });
+    this.#apple.draw();
+  }
+
+  // Private methods
+  #tick() {
+    this.#snake.move();
+  }
+
+  #increaseSpeed() {
+    clearInterval(this.#clockInterval);
+    this.#clockInterval = setInterval(
+      () => this.#tick(),
+      this.#speed - (this.#countApples * 20 + SPEED_INCREMENTATOR)
+    );
   }
 }
+
+export const board = new Board(); // Singleton
