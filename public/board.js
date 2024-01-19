@@ -6,6 +6,7 @@ import {
 } from "./constants.js";
 import { Apple } from "./apple.js";
 import { Snake, SnakePiece } from "./snake.js";
+import { updateUIScore } from "./app.js";
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -47,6 +48,11 @@ class Board {
     return this.#apple;
   }
 
+  setCountApples(countApples) {
+    this.#countApples = countApples;
+    updateUIScore(this.#countApples)
+  }
+
   // Setters
   setSnakeDirection(direction) {
     this.#snake.setDirection(direction);
@@ -65,17 +71,19 @@ class Board {
   }
 
   reset() {
+    const finalScore = this.#countApples;
+
     new Howl({
       preload: true,
       src: [`./assets/crash${Math.floor(Math.random() * (2 - 1 + 1) + 1)}.m4a`],
     }).play();
     this.#snake.reset();
-    this.#countApples = 0;
+    this.setCountApples(0);
     this.#speed = SPEED_INTERVAL;
     clearInterval(this.#clockInterval);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setTimeout(() => {
-      alert("END GAME");
+      alert(`FINAL SCORE: ${finalScore} POINTS. \nTRY AGAIN`);
     }, 50);
     this.start();
   }
@@ -92,11 +100,11 @@ class Board {
     do {
       tmpXNewApple =
         this.#availablePositionsForNewApple[
-          Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
+        Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
         ];
       tmpYNewApple =
         this.#availablePositionsForNewApple[
-          Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
+        Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
         ];
     } while (
       tmpXNewApple % PIECE_SIZE !== 0 ||
@@ -117,9 +125,10 @@ class Board {
 
   #increaseSpeed() {
     clearInterval(this.#clockInterval);
+    this.setCountApples(this.#countApples + 1);
     this.#clockInterval = setInterval(
       () => this.#tick(),
-      this.#speed - (this.#countApples * 20 + SPEED_INCREMENTATOR)
+      this.#speed - (this.#countApples * 2 + SPEED_INCREMENTATOR)
     );
   }
 }

@@ -1,18 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Canvas Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/howler/dist/howler.min.js"></script>
-  </head>
-  <body>
-    <canvas
-      id="myCanvas"
-      width="400"
-      height="400"
-      style="border: 1px solid #000"
-    ></canvas>
-    <script type="module" src="app.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retro Snake Game</title>
+  <script src="https://cdn.jsdelivr.net/npm/howler/dist/howler.min.js"></script>
+  <style>
+    html {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-color: #32b1f5;
+      color: #ff9f1c;
+      font-family: 'Press Start 2P', cursive;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    #myCanvas {
+      background-color: rgb(241, 222, 177);
+      border: 5px solid #000;
+      margin: 0 auto;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      font-size: 24px;
+      padding: 15px 20px;
+      background-color: #ffe156;
+      border: 3px solid #ff5714;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px #ff5714;
+    }
+
+    h5 {
+      color: black;
+      margin: 0;
+      margin-top: 2rem;
+    }
+
+    h6 {
+      color: black;
+      margin: 0;
+      margin-top: 10px;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+  <h2 id="score">Score:0</h2>
+  <h5>©2024. Iván FC</h5>
+  <h6>Original Sound</h6>
+  <script type="module" src="app.js"></script>
+</body>
+
 </html>

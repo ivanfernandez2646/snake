@@ -1,5 +1,7 @@
 import { board } from "./board.js";
 
+const scoreHtml = document.getElementById("score");
+
 document.addEventListener("keydown", function (event) {
   if (event.defaultPrevented) {
     return;
@@ -15,5 +17,9 @@ document.addEventListener("keydown", function (event) {
     board.setSnakeDirection("down");
   }
 });
+
+export function updateUIScore(count) {
+  scoreHtml.innerText = `Score:${count}`
+}
 
 board.start();
