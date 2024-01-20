@@ -164,13 +164,13 @@ export class SnakePiece {
   move(direction, prev) {
     if (this.#isHead) {
       if (direction === "right") {
-        if (this.#x + PIECE_SIZE > BOARD_SIZE) {
+        if (this.#x + PIECE_SIZE >= BOARD_SIZE) {
           this.#x = 0;
         } else {
           this.#x += PIECE_SIZE;
         }
       } else if (direction === "down") {
-        if (this.#y + PIECE_SIZE > BOARD_SIZE) {
+        if (this.#y + PIECE_SIZE >= BOARD_SIZE) {
           this.#y = 0;
         } else {
           this.#y += PIECE_SIZE;
