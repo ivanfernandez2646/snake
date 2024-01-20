@@ -65,14 +65,14 @@ export class Snake {
         this.#direction === "right"
           ? head.getX() + PIECE_SIZE
           : this.#direction === "left"
-          ? head.getX() - PIECE_SIZE
-          : head.getX(),
+            ? head.getX() - PIECE_SIZE
+            : head.getX(),
       newTmpHeadY =
         this.#direction === "up"
           ? head.getY() - PIECE_SIZE
           : this.#direction === "down"
-          ? head.getY() + PIECE_SIZE
-          : head.getY(),
+            ? head.getY() + PIECE_SIZE
+            : head.getY(),
       headNextMovementPiece = new SnakePiece({
         x: newTmpHeadX,
         y: newTmpHeadY,
@@ -123,22 +123,6 @@ export class Snake {
   }
 
   #checkCollision(frozenPieces, headNextMovementPiece) {
-    if (
-      headNextMovementPiece.getX() < 0 ||
-      headNextMovementPiece.getX() >= BOARD_SIZE
-    ) {
-      board.reset();
-      return;
-    }
-
-    if (
-      headNextMovementPiece.getY() < 0 ||
-      headNextMovementPiece.getY() >= BOARD_SIZE
-    ) {
-      board.reset();
-      return;
-    }
-
     for (const piece of frozenPieces.slice(0, -2)) {
       if (piece.isCollision(headNextMovementPiece)) {
         board.reset();
@@ -180,13 +164,29 @@ export class SnakePiece {
   move(direction, prev) {
     if (this.#isHead) {
       if (direction === "right") {
-        this.#x += PIECE_SIZE;
+        if (this.#x + PIECE_SIZE > BOARD_SIZE) {
+          this.#x = 0;
+        } else {
+          this.#x += PIECE_SIZE;
+        }
       } else if (direction === "down") {
-        this.#y += PIECE_SIZE;
+        if (this.#y + PIECE_SIZE > BOARD_SIZE) {
+          this.#y = 0;
+        } else {
+          this.#y += PIECE_SIZE;
+        }
       } else if (direction === "up") {
-        this.#y -= PIECE_SIZE;
+        if (this.#y - PIECE_SIZE < 0) {
+          this.#y = BOARD_SIZE - PIECE_SIZE;
+        } else {
+          this.#y -= PIECE_SIZE;
+        }
       } else if (direction === "left") {
-        this.#x -= PIECE_SIZE;
+        if (this.#x - PIECE_SIZE < 0) {
+          this.#x = BOARD_SIZE - PIECE_SIZE;
+        } else {
+          this.#x -= PIECE_SIZE;
+        }
       }
     } else {
       if (!prev) {
