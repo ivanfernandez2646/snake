@@ -128,7 +128,7 @@ class Board {
     this.setCountApples(this.#countApples + 1);
     this.#clockInterval = setInterval(
       () => this.#tick(),
-      this.#speed - (this.#countApples * 2 + SPEED_INCREMENTATOR)
+      this.#speed - (this.#countApples * 4 + SPEED_INCREMENTATOR)
     );
   }
 }
