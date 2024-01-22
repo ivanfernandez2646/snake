@@ -62,8 +62,7 @@ class Board {
   // Public methods
   reset() {
     new Howl({
-      preload: true,
-      src: [`./assets/crash${Math.floor(Math.random() * (2 - 1 + 1) + 1)}.m4a`],
+      src: [`./assets/crash1.m4a`],
     }).play();
     this.#snake.reset();
     this.#speed = SPEED_INTERVAL;
