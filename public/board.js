@@ -138,7 +138,7 @@ class Board {
     clearInterval(this.#clockInterval);
     this.setCountApples(this.#countApples + 1);
     if (this.#countApples % 2 === 0) {
-      this.#speed = this.#speed - 10;
+      this.#speed = this.#speed - 5;
     }
     this.#setClockInterval();
   }

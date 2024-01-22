@@ -61,18 +61,8 @@ export class Snake {
       head = frozenPieces.find((piece) => piece.getIsHead()),
       prevHead = frozenPieces[frozenPieces.length - 2],
       apple = board.getApple(),
-      newTmpHeadX =
-        this.#direction === "right"
-          ? head.getX() + PIECE_SIZE
-          : this.#direction === "left"
-            ? head.getX() - PIECE_SIZE
-            : head.getX(),
-      newTmpHeadY =
-        this.#direction === "up"
-          ? head.getY() - PIECE_SIZE
-          : this.#direction === "down"
-            ? head.getY() + PIECE_SIZE
-            : head.getY(),
+      newTmpHeadX = this.#calculateNewTmpX(head),
+      newTmpHeadY = this.#calculateNewTmpY(head),
       headNextMovementPiece = new SnakePiece({
         x: newTmpHeadX,
         y: newTmpHeadY,
@@ -96,6 +86,46 @@ export class Snake {
         board.generateNewApple();
       }
     }
+  }
+
+  #calculateNewTmpX(head) {
+    let res = head.getX();
+
+    if (this.#direction === "right") {
+      res = head.getX() + PIECE_SIZE;
+      if (res > BOARD_SIZE - PIECE_SIZE) {
+        res = 0;
+      }
+    }
+
+    if (this.#direction === "left") {
+      res = head.getX() - PIECE_SIZE;
+      if (res < 0) {
+        res = BOARD_SIZE - PIECE_SIZE;
+      }
+    }
+
+    return res;
+  }
+
+  #calculateNewTmpY(head) {
+    let res = head.getY();
+
+    if (this.#direction === "down") {
+      res = head.getY() + PIECE_SIZE;
+      if (res > BOARD_SIZE - PIECE_SIZE) {
+        res = 0;
+      }
+    }
+
+    if (this.#direction === "up") {
+      res = head.getY() - PIECE_SIZE;
+      if (res < 0) {
+        res = BOARD_SIZE - PIECE_SIZE;
+      }
+    }
+
+    return res;
   }
 
   #handleDirection(prevHead, headNextMovementPiece) {
