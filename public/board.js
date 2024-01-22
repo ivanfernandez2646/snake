@@ -1,9 +1,4 @@
-import {
-  BOARD_SIZE,
-  PIECE_SIZE,
-  SPEED_INTERVAL,
-  SPEED_INCREMENTATOR,
-} from "./constants.js";
+import { BOARD_SIZE, PIECE_SIZE, SPEED_INTERVAL } from "./constants.js";
 import { Apple } from "./apple.js";
 import { Snake, SnakePiece } from "./snake.js";
 import { updateUIScore, updateUITogglePause } from "./app.js";
@@ -35,7 +30,7 @@ class Board {
       } while (res[res.length - 1] < BOARD_SIZE - PIECE_SIZE);
       return res;
     })();
-    this.#isPaused = false;
+    this.#isPaused = undefined;
 
     if (typeof Board.instance === "object") {
       return Board.instance;
@@ -65,30 +60,17 @@ class Board {
   }
 
   // Public methods
-  start() {
-    this.#snake = new Snake({ x: 0, y: 0, board: this });
-    this.#apple = new Apple({ x: 20, y: 20 });
-    this.#snake.draw();
-    this.#apple.draw();
-    this.#setClockInterval();
-  }
-
   reset() {
-    const finalScore = this.#countApples;
-
     new Howl({
       preload: true,
       src: [`./assets/crash${Math.floor(Math.random() * (2 - 1 + 1) + 1)}.m4a`],
     }).play();
     this.#snake.reset();
-    this.setCountApples(0);
     this.#speed = SPEED_INTERVAL;
+    this.#isPaused = undefined;
     clearInterval(this.#clockInterval);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setTimeout(() => {
-      alert(`FINAL SCORE: ${finalScore} POINTS. \nTRY AGAIN`);
-    }, 50);
-    this.start();
+    updateUITogglePause();
   }
 
   generateNewApple() {
@@ -126,14 +108,28 @@ class Board {
       this.#isPaused = false;
       this.#setClockInterval();
     } else {
-      this.#isPaused = true;
-      clearInterval(this.#clockInterval);
+      if (this.#isPaused === undefined) {
+        this.#isPaused = false;
+        this.#start();
+      } else {
+        this.#isPaused = true;
+        clearInterval(this.#clockInterval);
+      }
     }
 
     updateUITogglePause();
   }
 
   // Private methods
+  #start() {
+    this.#snake = new Snake({ x: 0, y: 0 });
+    this.#apple = new Apple({ x: 20, y: 20 });
+    this.#snake.draw();
+    this.#apple.draw();
+    this.setCountApples(0);
+    this.#setClockInterval();
+  }
+
   #tick() {
     this.#snake.move();
   }
@@ -141,14 +137,14 @@ class Board {
   #increaseSpeed() {
     clearInterval(this.#clockInterval);
     this.setCountApples(this.#countApples + 1);
+    if (this.#countApples % 2 === 0) {
+      this.#speed = this.#speed - 10;
+    }
     this.#setClockInterval();
   }
 
   #setClockInterval() {
-    this.#clockInterval = setInterval(
-      () => this.#tick(),
-      this.#speed - (this.#countApples * 4 + SPEED_INCREMENTATOR)
-    );
+    this.#clockInterval = setInterval(() => this.#tick(), this.#speed);
   }
 }
 

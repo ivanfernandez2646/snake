@@ -4,4 +4,3 @@ export const SNAKE_HEAD_COLOR = "#32CD32";
 export const SNAKE_BODY_COLOR = "#228B22";
 export const APPLE_COLOR = "red";
 export const SPEED_INTERVAL = 250;
-export const SPEED_INCREMENTATOR = 100; // 1 to 100

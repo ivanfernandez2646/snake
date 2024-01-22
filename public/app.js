@@ -1,8 +1,10 @@
 import { board } from "./board.js";
+import { BOARD_SIZE } from "./constants.js";
 
 const scoreHtml = document.getElementById("score"),
   overlay = document.getElementById("pause-overlay"),
-  controlLegend = document.getElementById("control-legend");
+  controlLegend = document.getElementById("control-legend"),
+  gameTitle = document.getElementById("game-title");
 
 document.addEventListener("keydown", function (event) {
   if (event.defaultPrevented) {
@@ -22,15 +24,27 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
+controlLegend.addEventListener("click", function (event) {
+  board.togglePause();
+});
+
 export function updateUIScore(count) {
   scoreHtml.innerText = `Score:${count}`;
+
+  const progressPercentage = ((count * 100) / BOARD_SIZE) * 5;
+
+  gameTitle.style.background = `linear-gradient(90deg, #ff0000 ${progressPercentage}%, #ffcc00 ${progressPercentage}%)`;
+  gameTitle.style.backgroundClip = "text";
 }
 
 export function updateUITogglePause() {
-  const isPaused = board.getIsPaused();
+  const isPaused = board.getIsPaused(),
+    isGameOver = isPaused === undefined;
 
-  overlay.style.visibility = isPaused ? "visible" : "hidden";
-  controlLegend.classList[isPaused ? "add" : "remove"]("zoom-animation");
+  overlay.innerText = isPaused ? "Game Paused" : "Game Over";
+  overlay.style.visibility = isPaused || isGameOver ? "visible" : "hidden";
+  overlay.classList[isGameOver ? "add" : "remove"]("blink-animation");
+  controlLegend.classList[isPaused || isGameOver ? "add" : "remove"](
+    "zoom-animation"
+  );
 }
-
-board.start();

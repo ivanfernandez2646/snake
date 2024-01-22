@@ -21,7 +21,7 @@ body {
   text-align: center;
   font-weight: bold;
   color: #ffcc00;
-  background: linear-gradient(45deg, #ff0000, #ffcc00, #ff0000);
+  background: #ffcc00;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -56,7 +56,6 @@ body {
   color: white;
   font-size: 2em;
   text-align: center;
-  visibility: hidden;
 }
 
 #pause-overlay p {
@@ -87,6 +86,20 @@ h2 {
 
 .zoom-animation {
   animation: zoomInOut 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink-animation {
+  animation: blink 2s ease-out 0s 3;
 }
 
 #control-legend {
