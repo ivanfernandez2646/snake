@@ -5,97 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Retro Snake Game</title>
     <script src="https://cdn.jsdelivr.net/npm/howler/dist/howler.min.js"></script>
-    <style>
-      html {
-        display: flex;
-        height: 100%;
-        width: 100%;
-      }
-
-      body {
-        background-color: #32b1f5;
-        color: #ff9f1c;
-        font-family: "Press Start 2P", cursive;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-      }
-
-      #game-board-container {
-        position: relative;
-        width: 410px;
-        height: 410px;
-        margin: 0 auto;
-      }
-
-      #myCanvas {
-        background-color: rgb(241, 222, 177);
-        border: 5px solid #000;
-        margin: 0 auto;
-      }
-
-      #pause-overlay {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        font-size: 2em;
-        text-align: center;
-        visibility: hidden;
-      }
-
-      #pause-overlay p {
-        margin: 0;
-        padding: 10px;
-      }
-
-      h2 {
-        color: black;
-        margin-top: 2rem;
-        font-size: 24px;
-        padding: 15px 20px;
-        background-color: #ff9f1c;
-        border: 3px solid #ff5714;
-        border-radius: 8px;
-        box-shadow: 2px 2px 0px #ff5714;
-      }
-
-      #control-legend {
-        text-align: center;
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #ffe156;
-        border: 3px solid #ff5714;
-        border-radius: 8px;
-        box-shadow: 2px 2px 0px #ff5714;
-        color: black;
-      }
-
-      #control-legend p {
-        margin: 5px;
-        font-size: 0.8rem;
-      }
-
-      h5 {
-        color: black;
-        margin: 0;
-        margin-top: 2rem;
-      }
-
-      h6 {
-        color: black;
-        margin: 0;
-        margin-top: 10px;
-      }
-    </style>
+    <link href="styles.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
@@ -103,10 +13,17 @@
   </head>
 
   <body>
+    <h1 id="game-title">SNAKE</h1>
     <div id="game-board-container">
-      <canvas id="myCanvas" width="400" height="400"></canvas>
+      <canvas id="myCanvas" width="500" height="500"></canvas>
+      <div id="start-overlay" hidden>
+        <p>Start Game</p>
+      </div>
       <div id="pause-overlay" hidden>
         <p>Game Paused</p>
+      </div>
+      <div id="end-overlay" hidden>
+        <p>Game Over</p>
       </div>
     </div>
     <h2 id="score">Score:0</h2>

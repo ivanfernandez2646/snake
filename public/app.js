@@ -1,7 +1,8 @@
 import { board } from "./board.js";
 
 const scoreHtml = document.getElementById("score"),
-  overlay = document.getElementById("pause-overlay");
+  overlay = document.getElementById("pause-overlay"),
+  controlLegend = document.getElementById("control-legend");
 
 document.addEventListener("keydown", function (event) {
   if (event.defaultPrevented) {
@@ -26,7 +27,10 @@ export function updateUIScore(count) {
 }
 
 export function updateUITogglePause() {
-  overlay.style.visibility = board.getIsPaused() ? "visible" : "hidden";
+  const isPaused = board.getIsPaused();
+
+  overlay.style.visibility = isPaused ? "visible" : "hidden";
+  controlLegend.classList[isPaused ? "add" : "remove"]("zoom-animation");
 }
 
 board.start();
