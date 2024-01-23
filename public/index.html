@@ -11,26 +11,32 @@
       rel="stylesheet"
     />
   </head>
-
   <body>
-    <div id="mobile-warning">
-      <p>
-        Please switch to a computer to play this game. Mobile version coming
-        soon!
-      </p>
-    </div>
     <h1 id="game-title">SNAKE</h1>
     <div id="game-board-container">
       <canvas id="myCanvas" width="500" height="500"></canvas>
       <div id="pause-overlay">Press Space</div>
     </div>
-    <h2 id="score">Score:0</h2>
+    <div id="d-pad">
+      <button class="d-pad-button" id="d-pad-up">UP</button>
+      <button class="d-pad-button" id="d-pad-left">LEFT</button>
+      <button class="d-pad-button" id="d-pad-right">RIGHT</button>
+      <button class="d-pad-button" id="d-pad-down">DOWN</button>
+    </div>
     <div id="control-legend" class="zoom-animation">
       <p>🡅 🡇 🡄 🡆 to move</p>
       <p>SPACE to pause/resume</p>
     </div>
-    <h5>©2024. Iván FC</h5>
-    <h6>Esclate Solutions</h6>
+    <div id="footer">
+      <div id="footer">
+        <h5>
+          ©2024. Iván FC |
+          <a href="https://github.com/ivanfernandez2646" target="_blank"
+            >Click Me!</a
+          >
+        </h5>
+      </div>
+    </div>
     <script type="module" src="app.js"></script>
   </body>
 </html>

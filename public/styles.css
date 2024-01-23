@@ -17,7 +17,7 @@ body {
 }
 
 #game-title {
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
   font-weight: bold;
   color: #ffcc00;
@@ -32,15 +32,18 @@ body {
 
 #game-board-container {
   position: relative;
-  width: 510px;
-  height: 510px;
+  width: 90%;
+  max-width: 510px;
+  height: 90vh;
+  max-height: 510px;
   margin: 0 auto;
 }
 
 #myCanvas {
   background-color: #000000;
   border: 5px solid #ffffff;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
 
 #pause-overlay {
@@ -63,17 +66,103 @@ body {
   padding: 10px;
 }
 
-h2 {
-  color: #ffffff;
-  margin-top: 2rem;
-  font-size: 24px;
-  padding: 15px 20px;
-  background-color: #ff0000;
-  border: 3px solid #ffcc00;
+#control-legend {
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px;
+  background-color: #ffcc00;
+  border: 3px solid #ff0000;
   border-radius: 8px;
-  box-shadow: 2px 2px 0px #ffcc00;
+  box-shadow: 2px 2px 0px #ff0000;
+  color: black;
 }
 
+#control-legend p {
+  margin: 5px;
+  font-size: 0.8rem;
+}
+
+#footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#footer h5 {
+  color: #ffffff;
+  font-size: 0.8rem;
+}
+
+#footer a {
+  color: #ffcc00;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+#footer a:hover {
+  color: #ff0000;
+}
+
+/* DPad for touchscreens */
+#touch-controls {
+  display: none;
+  column-gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#d-pad {
+  position: relative;
+  width: 240px;
+  height: 160px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.d-pad-button {
+  position: absolute;
+  background-color: #ffcc00;
+  border: 3px solid #ff0000;
+  color: black;
+  width: 80px;
+  height: 80px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px #ff0000;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.d-pad-button:focus {
+  outline: none;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px #ff0000, 0 0 15px #ffcc00;
+}
+
+#d-pad-up {
+  top: 0;
+  left: 80px;
+}
+
+#d-pad-down {
+  top: 80px;
+  left: 80px;
+}
+
+#d-pad-left {
+  top: 80px;
+  left: 0;
+}
+
+#d-pad-right {
+  top: 80px;
+  left: 160px;
+}
+
+/* Animations */
 @keyframes zoomInOut {
   0%,
   100% {
@@ -102,72 +191,44 @@ h2 {
   animation: blink 2s ease-out 0s 3;
 }
 
-#control-legend {
-  text-align: center;
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #ffcc00;
-  border: 3px solid #ff0000;
-  border-radius: 8px;
-  box-shadow: 2px 2px 0px #ff0000;
-  color: black;
-}
-
-#control-legend p {
-  margin: 5px;
-  font-size: 0.8rem;
-}
-
-h5,
-h6 {
-  color: #ffffff;
-  margin: 0;
-}
-
-h5 {
-  margin-top: 2rem;
-}
-
-h6 {
-  margin-top: 10px;
-}
-
-#mobile-warning {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 30%;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  font-family: "Press Start 2P", cursive;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 1000;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-#mobile-warning p {
-  font-size: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  #mobile-warning {
-    display: none;
+/* Responsive */
+@media screen and (max-width: 600px) {
+  #game-title {
+    font-size: 2.2rem;
   }
-}
 
-@media (max-width: 768px) {
-  #mobile-warning {
+  #touch-controls {
     display: flex;
+    flex-direction: row;
   }
 
-  #game-board-container,
-  #control-legend,
-  #score {
-    display: none;
+  #pause-overlay {
+    font-size: 1.2em;
+  }
+
+  #game-board-container {
+    width: 80%;
+    height: 50vh;
+  }
+}
+
+/* Responsive adjustments for tablets and wider screens */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  #game-title {
+    font-size: 2.5rem;
+  }
+
+  #game-board-container {
+    width: 70%;
+    height: 70vh;
+  }
+
+  #touch-controls {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #pause-overlay {
+    font-size: 1.5em;
   }
 }
