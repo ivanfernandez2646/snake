@@ -67,6 +67,7 @@ body {
 }
 
 #control-legend {
+  display: none;
   text-align: center;
   margin-top: 40px;
   padding: 10px;
@@ -103,16 +104,8 @@ body {
 }
 
 /* DPad for touchscreens */
-#touch-controls {
-  display: none;
-  column-gap: 2rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-}
-
 #d-pad {
+  display: none;
   position: relative;
   width: 240px;
   height: 160px;

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayHtml.innerText = "Touch here";
     overlayHtml.classList.add("blink-animation");
 
-    controlLegendHtml.style.display = "none";
+    dPadHtml.style.display = "block";
 
     overlayHtml.addEventListener("click", function () {
       board.togglePause();
@@ -63,7 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   // Desktop
   else {
-    dPadHtml.style.display = "none";
+    overlayHtml.innerText = "Press Space";
+    controlLegendHtml.style.display = "block";
+
     document.addEventListener("keydown", function (event) {
       if (event.defaultPrevented) {
         return;
