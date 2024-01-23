@@ -99,11 +99,12 @@ export function updateUIScore(count) {
 
 export function updateUITogglePause() {
   const isPaused = board.getIsPaused(),
-    isGameOver = isPaused === undefined;
+    isGameOver = isPaused === undefined,
+    score = board.getCountApples();
 
   overlayHtml.innerHTML = isPaused
     ? "Game Paused"
-    : "<div><p>Game Over</p><p>Score: 3</p></p></div>";
+    : `<div><p>Game Over</p><p>Score: ${score}</p></p></div>`;
   overlayHtml.style.visibility = isPaused || isGameOver ? "visible" : "hidden";
   overlayHtml.classList[isGameOver ? "add" : "remove"]("blink-animation");
   controlLegendHtml.classList[isPaused || isGameOver ? "add" : "remove"](

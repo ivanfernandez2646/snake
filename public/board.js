@@ -49,12 +49,16 @@ class Board {
     return this.#isPaused;
   }
 
+  getCountApples() {
+    return this.#countApples;
+  }
+
   // Setters
   setSnakeDirection(direction) {
     this.#snake.setDirection(direction);
   }
 
-  setCountApples(countApples) {
+  #setCountApples(countApples) {
     this.#countApples = countApples;
     updateUIScore(this.#countApples);
   }
@@ -84,11 +88,11 @@ class Board {
     do {
       tmpXNewApple =
         this.#availablePositionsForNewApple[
-          Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
+        Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
         ];
       tmpYNewApple =
         this.#availablePositionsForNewApple[
-          Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
+        Math.floor(Math.random() * this.#availablePositionsForNewApple.length)
         ];
     } while (
       tmpXNewApple % PIECE_SIZE !== 0 ||
@@ -125,7 +129,7 @@ class Board {
     this.#apple = new Apple({ x: 20, y: 20 });
     this.#snake.draw();
     this.#apple.draw();
-    this.setCountApples(0);
+    this.#setCountApples(0);
     this.#setClockInterval();
   }
 
@@ -135,7 +139,7 @@ class Board {
 
   #increaseSpeed() {
     clearInterval(this.#clockInterval);
-    this.setCountApples(this.#countApples + 1);
+    this.#setCountApples(this.#countApples + 1);
     if (this.#countApples % 2 === 0) {
       this.#speed = this.#speed - 5;
     }
